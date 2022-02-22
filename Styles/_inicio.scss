@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+.container_grid{
+    display: grid;
+    width: 100%;
+    height: 100vh;
+    grid-template-columns: auto auto;
+    grid-template-rows: 10vh auto 10vh;
+    grid-template-areas: "heade heade" "main main" "footer footer";
+}
+header{
+    grid-area: heade;
+    font-weight: 700;
+    overflow: hidden;
+    nav{
+        display: grid;
+        grid-template-columns: 20% auto 20%;
+        grid-template-areas: "logo pages login";
+            .pages{
+                display: flex;
+                grid-area: pages;
+                justify-content: center;
+                li{
+                    margin: 10px;
+                }
+            }
+            .login{
+            flex-wrap: wrap;
+            display: flex;
+            grid-area: login;
+            justify-content: end;
+            li{
+                margin: 10px;
+            }
+            .deleteCart{
+                border: none;
+                background-color: red;
+                padding: 5px;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+        .pages li:hover, .login li:hover{
+            transform: scale(1.2);
+            transition: transform 1s;
+            cursor: pointer;
+        }
+    }
+}
+main{
+    grid-area: main;
+    
+    .containerProductos{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        .ProductoDiv{
+            display: inline-block;
+            width: 300px;
+            text-align: center;
+            background-color: gray;
+            padding: 20px;
+            margin: 5px;
+            img{
+                max-width: 300px;
+                max-height: 300px;
+            }
+            button{
+                width: 250px;
+                height: 50px;
+                border: none;
+                background-color: rgb(46, 120, 180);
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+            button:hover{
+                transform: scale(1.1);
+                transition: transform 0.5s;
+                cursor: pointer;
+            }
+        }
+    }
+}
+footer{
+    grid-area: footer;
+}

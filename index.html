@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/Styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Inicio</title>
 </head>
 <body>
-    <script src="Styles/js.js"></script>
+    <div class="container_grid">
+    <header>
+        <nav>
+            <ul class="pages">
+                <li>Incio</li>
+                <li>Productos</li>
+            </ul>
+            <ul class="login">
+                <li>Login</li>
+                <li>Registro</li>
+                <li><input type="text" class="deleteCart" onclick="deleteCart()" value="Elminar Carrito"></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="containerProductos">
+            <div class="ProductoDiv">
+                <img src="img/remera.jpg" alt="Remera Negra">
+                <p>Precio <a id="price1">600</a></p>
+                <button onclick="addCart(price1)">Agregar al carrito</button>
+            </div>
+            <div class="ProductoDiv" id="remera">
+                <img src="img/remeraM.jpg" alt="Remera Negra">
+                <p>Precio <a id="price2">400</a></p>
+                <button onclick="addCart(price2)">Agregar al carrito</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+    <script src="JS/Js.js"></script>
+</div>
 </body>
 </html>
