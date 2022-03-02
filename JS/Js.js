@@ -1,8 +1,8 @@
 let totalProducto = 0;
-function addCart(producto){
+function addCart(traido){
     cantidad = prompt('Cantidad a agregar');
     for (i=0; i<cantidad;i++){
-        precio = parseInt(producto.text);
+        precio = parseInt(traido.text);
         totalProducto += precio;    
     }
     alert('Agregado, Total ' + totalProducto)
@@ -14,5 +14,14 @@ function deleteCart(){
         totalProducto = 0;
         alert('Carrito eliminado $'+totalProducto);    
     }
+
+}
+function addAll(producto1,producto2){
+    let productos = [producto1,producto2];
+    for(i=0;i<productos.length;i++){
+        totalProducto += parseInt(productos[i].text);
+    }
+    alert('Agregado $'+ totalProducto)
+
 
 }
