@@ -1,10 +1,18 @@
 let totalProducto = 0;
 function addCart(producto){
-    precio = parseInt(producto.text);
-    totalProducto += precio;
+    cantidad = prompt('Cantidad a agregar');
+    for (i=0; i<cantidad;i++){
+        precio = parseInt(producto.text);
+        totalProducto += precio;    
+    }
     alert('Agregado, Total ' + totalProducto)
 }
 function deleteCart(){
-    totalProducto = 0;
-    alert('Carrito eliminado $'+totalProducto);
+    if(totalProducto == 0){
+        alert("No agregaste nada al carrito")
+    }else{
+        totalProducto = 0;
+        alert('Carrito eliminado $'+totalProducto);    
+    }
+
 }
