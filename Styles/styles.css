@@ -27,6 +27,11 @@ header {
   grid-area: heade;
   font-weight: 700;
   overflow: hidden;
+  background-color: hotpink;
+  display: -ms-grid;
+  display: grid;
+  -ms-flex-line-pack: center;
+      align-content: center;
 }
 
 header nav {
@@ -95,6 +100,10 @@ main {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: main;
+}
+
+main .containerSlide {
+  text-align: center;
 }
 
 main .containerProductos {

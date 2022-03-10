@@ -17,6 +17,7 @@
             <ul class="pages">
                 <li>Incio</li>
                 <li>Productos</li>
+                <li>Descuentos</li>
             </ul>
             <ul class="login">
                 <li>Login</li>
@@ -25,20 +26,20 @@
             </ul>
         </nav>
     </header>
-    <main>
+    <main>           
         <div class="containerProductos">
             <div class="ProductoDiv">
                 <img src="img/remera.jpg" alt="Remera Negra">
                 <p>Precio <a id="price1">600</a></p>
-                <button onclick="addCart(price1)">Agregar al carrito</button>
+                <button id="btnRemera1">Agregar al carrito</button>
             </div>
             <div class="ProductoDiv" id="remera">
                 <img src="img/remeraM.jpg" alt="Remera Negra">
                 <p>Precio <a id="price2">400</a></p>
-                <button onclick="addCart(price2)">Agregar al carrito</button>
+                <button id="btnRemera2">Agregar al carrito</button>
             </div>
-            <div class="ProductoDiv">
-                <button onclick="addAll(price1,price2)">Agregar al carrito</button>
+            <div class="ProductoDiv" id="productos">
+                <button id="btnAddAll">Agregar Todo al carrito</button>
             </div>
         </div>
     </main>

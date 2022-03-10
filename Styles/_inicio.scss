@@ -18,6 +18,9 @@ header{
     grid-area: heade;
     font-weight: 700;
     overflow: hidden;
+    background-color: hotpink;
+    display: grid;
+    align-content: center;
     nav{
         display: grid;
         grid-template-columns: 20% auto 20%;
@@ -56,7 +59,9 @@ header{
 }
 main{
     grid-area: main;
-    
+    .containerSlide{
+        text-align: center;
+    }
     .containerProductos{
         display: flex;
         justify-content: center;
