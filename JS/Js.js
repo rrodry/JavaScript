@@ -4,6 +4,7 @@ btn1 = document.getElementById("btnRemera1");
 btn2 = document.getElementById("btnRemera2");
 
 btn1.addEventListener("click", addCart)
+btn2.addEventListener("click", addCart)
 
 function addCart(traido){
     divProductos = document.getElementById('productos');
