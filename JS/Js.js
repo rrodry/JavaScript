@@ -17,27 +17,29 @@ function addCart(traido) {
     if (flag == true) {
         index = productosLista.indexOf(parentImage)
         cantidadPrecioSuma = parseInt(cantidadLista[parseInt(index)])+cantidad
-        const liProducto = document.getElementById('productos'+ index)
        if(productosLista.includes(parentImage)){
+            const liProducto = document.getElementById('productos'+ index)
            cantidadLista[index] = cantidadPrecioSuma
-           liProducto.children[2].children[0].innerText = cantidadLista
+           liProducto.children[2].children[0].innerText = cantidadLista[index]
        }else{
-        const ul = document.createElement('ul')
-        ul.id = 'productos' + productosLista.length
-        divProductos.appendChild(ul)
         cantidadLista.push(cantidad)
-        carritoAgregar(parentImage,parentPrecio,cantidadLista[productosLista.indexOf(parentImage)])
         productosLista.push(parentImage)
+        index = productosLista.indexOf(parentImage)
+        const ul = document.createElement('ul')
+        ul.id = 'productos' + index
+        divProductos.appendChild(ul)
+        carritoAgregar(parentImage,parentPrecio,cantidadLista[index],index)
        }
 
     } else {
+        productosLista[0]= parentImage
+        index = productosLista.indexOf(parentImage)
         const ul = document.createElement('ul')
-        ul.id = 'productos' + productosLista.length
+        ul.id = 'productos' + index
         divProductos.appendChild(ul)
         cantidadLista[0] = cantidad
-        carritoAgregar(parentImage,parentPrecio,cantidadLista);
+        carritoAgregar(parentImage,parentPrecio,cantidadLista,index);
         flag = true;
-        productosLista[0]= parentImage
     }
 }
 function deleteCart() {
@@ -53,8 +55,8 @@ function deleteCart() {
 
 }
 
-function carritoAgregar(parentImage,parentPrecio,cantProducto) {
-    const ulProducto = document.getElementById('productos' + productosLista.length)
+function carritoAgregar(parentImage,parentPrecio,cantProducto,index) {
+    const ulProducto = document.getElementById('productos' + index)
     for (i = 0; i < 3; i++) {
         const liProducto = document.createElement('li')
         liProducto.id = "li" + i
