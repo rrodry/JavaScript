@@ -59,6 +59,7 @@ header{
 }
 main{
     grid-area: main;
+    position: relative;
     .containerSlide{
         text-align: center;
     }
@@ -90,6 +91,31 @@ main{
                 transform: scale(1.1);
                 transition: transform 0.5s;
                 cursor: pointer;
+            }
+        }
+    }
+    .productoAgregado{
+        position: absolute;
+        display: flex;
+        top: 0px;
+        left: 0px;
+        height: 100vh;
+        justify-content: flex-end;
+        .divListAgregado{
+            width: 20vw;
+            background-color: rgb(209, 206, 206);
+            border-radius: 0px 5px 5px 0px;
+            ul{
+                display: flex;
+                justify-content: space-around;
+                li{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    img{
+                        max-width: 100px;
+                    }
+                }
             }
         }
     }
