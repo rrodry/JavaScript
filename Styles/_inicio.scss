@@ -11,7 +11,7 @@
     width: 100%;
     height: 100vh;
     grid-template-columns: auto auto;
-    grid-template-rows: 10vh auto 10vh;
+    grid-template-rows: 10vh 70vh 0vh;
     grid-template-areas: "heade heade" "main main" "footer footer";
 }
 header{
@@ -69,12 +69,16 @@ main{
         flex-wrap: wrap;
         width: 100%;
         .ProductoDiv{
-            display: inline-block;
-            width: 300px;
+            display: flex;
+            flex-wrap: wrap;
+            width: 350px;
+            justify-content: center;
             text-align: center;
             background-color: gray;
             padding: 20px;
             margin: 5px;
+            align-items: center;
+            text-align: center;
             img{
                 max-width: 300px;
                 max-height: 300px;
@@ -85,7 +89,7 @@ main{
                 border: none;
                 background-color: rgb(46, 120, 180);
                 border-radius: 10px;
-                margin-top: 10px;
+                margin-top: 5px;
             }
             button:hover{
                 transform: scale(1.1);
@@ -100,7 +104,7 @@ main{
         top: 0px;
         left: 0px;
         height: 100vh;
-        justify-content: flex-end;
+        justify-content: center;
         .divListAgregado{
             width: 20vw;
             background-color: rgb(209, 206, 206);
@@ -115,8 +119,23 @@ main{
                     img{
                         max-width: 100px;
                     }
+                    .buttonEliminar{
+                        background: none;
+                        background-image: url(../img/x.png);
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        height: 20px;
+                        width: 20px;
+                        border: none;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
                 }
             }
+        }.divTotal{
+            position: absolute;
+            right: 0;
+            bottom: 50%;
         }
     }
 }

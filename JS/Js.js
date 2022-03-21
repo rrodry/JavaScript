@@ -1,88 +1,137 @@
-let totalProducto = 0, cantProducto = 0, x = 0, flag, btn1, btn2, parentPrecio, parentImage, productosLista = [],cantidadLista = [];
-const divProductos = document.getElementById('divListAgregado')
+let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj")) || [], suma = 0,
+    btnEliminar;
+const divProductos = document.getElementById('divListAgregado'),
+    preciosViajes = JSON.parse(localStorage.getItem("preciosViajes")) || {}
+    btn1 = document.getElementById("btnRemera1"),
+    btn2 = document.getElementById("btnRemera2"),
+    btn3 = document.getElementById("btnRemera3")
 
-btn1 = document.getElementById("btnRemera1");
-btn2 = document.getElementById("btnRemera2");
+btn1.addEventListener("click", () => verificarCarrito(btn1.parentNode.children[1].children[0]))
+btn2.addEventListener("click", () => verificarCarrito(btn2.parentNode.children[1].children[0]))
+btn3.addEventListener("click", () => verificarCarrito(btn3.parentNode.children[1].children[0]))
 
-btn1.addEventListener("click", addCart)
-btn2.addEventListener("click", addCart)
-
-function addCart(traido) {
-    let parentPrecio = traido.target.parentNode.children[1].children[0].text,
-        parentImage = traido.target.parentNode.children[0].src;
-        cantidad = parseInt(prompt('Cantidad a agregar'))
-        cantProducto += cantidad;
-        totalProducto += parseInt(parentPrecio) * cantidad;
-    
-    if (flag == true) {
-        index = productosLista.indexOf(parentImage)
-        cantidadPrecioSuma = parseInt(cantidadLista[parseInt(index)])+cantidad
-       if(productosLista.includes(parentImage)){
-            const liProducto = document.getElementById('productos'+ index)
-           cantidadLista[index] = cantidadPrecioSuma
-           liProducto.children[2].children[0].innerText = cantidadLista[index]
-       }else{
-        cantidadLista.push(cantidad)
-        productosLista.push(parentImage)
-        index = productosLista.indexOf(parentImage)
-        const ul = document.createElement('ul')
-        ul.id = 'productos' + index
-        divProductos.appendChild(ul)
-        carritoAgregar(parentImage,parentPrecio,cantidadLista[index],index)
-       }
-
-    } else {
-        productosLista[0]= parentImage
-        index = productosLista.indexOf(parentImage)
-        const ul = document.createElement('ul')
-        ul.id = 'productos' + index
-        divProductos.appendChild(ul)
-        cantidadLista[0] = cantidad
-        carritoAgregar(parentImage,parentPrecio,cantidadLista,index);
-        flag = true;
+if (Object.keys(preciosViajes).length > 0) {
+    for (const lugar in preciosViajes) {
+        size = Object.keys(preciosViajes).indexOf(lugar)
+        for (i = 0; i <= arrObj.length; i++) {
+            if (lugar == arrObj[i]) {
+                travel = arrObj[i + 2]
+            }
+        }
+        createNewProducto(size, travel, lugar)
     }
 }
-function deleteCart() {
-    if (totalProducto == 0) {
-        alert("No agregaste nada al carrito")
-    } else {
-        totalProducto = 0;
-        alert('Carrito eliminado $' + totalProducto);
+
+function eliminarCarrito(lugar) {
+    let producto = document.getElementById(lugar),total = document.getElementById("TotalDiv")
+    for (i = 0; i <= arrObj.length; i++) {
+        if (lugar == arrObj[i]) {
+            arrObj.splice(i, 3);
+            delete preciosViajes[lugar]
+        }
+    }if(arrObj.length == 0){
+        localStorage.clear("arrObj","preciosViajes","productoTotal")
+        total.remove()
+        delete preciosViajes
+    }else{
+        let suma=0
+        for (i = 0; i <= arrObj.length; i++) {
+            if(!isNaN(arrObj[i])){
+                suma += arrObj[i]
+            }
+        }
+        localStorage.setItem("arrObj",JSON.stringify(arrObj))
+        localStorage.setItem("productoTotal",JSON.stringify(suma))
+        localStorage.setItem("preciosViajes",JSON.stringify(preciosViajes))
+        divProductos.parentNode.children[1].innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
     }
-    actuElement = document.getElementById("totalElement");
-    actuElement.remove();
-    flag = false
-
+    producto.remove()
 }
+function verificarCarrito(travel) {
+    let lugar = travel.text, precio = travel.parentNode.children[1].text, cantProducto = parseInt(travel.parentNode.parentNode.children[2].value)
+    size = Object.keys(preciosViajes)
+    parentimg = travel.parentNode.parentNode.children[0].src
+    productoTotal = 0
+    if (!preciosViajes.hasOwnProperty(lugar)) {
+        preciosViajes[lugar] = parseInt(precio)
+        if (size.length == 0) {
+            productoTotal = preciosViajes[lugar] * cantProducto
+            if (arrObj.length == 0) {
+                arrObj.unshift(parentimg)
+                arrObj.unshift(preciosViajes[lugar] * cantProducto)
+                arrObj.unshift(lugar)
+                localStorage.setItem("productoTotal", productoTotal)
+                localStorage.setItem("arrObj", JSON.stringify(arrObj))
+                localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
+            }
+            travel.parentNode.parentNode.children[2].value = ""
+        } else {
+            suma = preciosViajes[lugar] * cantProducto
+            arrObj.unshift(parentimg)
+            arrObj.unshift(suma)
+            arrObj.unshift(lugar)
+            arrObj.forEach(element => {
+                if (!isNaN(element)) {
+                    productoTotal += element
+                }
+            });
+            localStorage.setItem("productoTotal", productoTotal)
+            localStorage.setItem("arrObj", JSON.stringify(arrObj))
 
-function carritoAgregar(parentImage,parentPrecio,cantProducto,index) {
-    const ulProducto = document.getElementById('productos' + index)
-    for (i = 0; i < 3; i++) {
-        const liProducto = document.createElement('li')
-        liProducto.id = "li" + i
-        ulProducto.appendChild(liProducto)
+            localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
+            travel.parentNode.parentNode.children[2].value = ""
+        }
+        createNewProducto(size.length, parentimg, lugar)
+    } else {
+        productoTotal = 0
+        suma = preciosViajes[lugar] * cantProducto
+        for (i = 0; i <= arrObj.length; i++) {
+            if (lugar == arrObj[i]) {
+                arrObj[i + 1] += suma
+            } if (!isNaN(arrObj[i])) {
+                productoTotal += arrObj[i]
+            }
+        }
+        localStorage.setItem("productoTotal", productoTotal)
+        localStorage.setItem("arrObj", JSON.stringify(arrObj))
+        localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
+        divProductos.parentNode.children[1].innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
+        travel.parentNode.parentNode.children[2].value = ""
+    }
+}
+function createNewProducto(index, travel, lugar) {
+    let ul = document.createElement('ul'), ulProducto = document.getElementById('divListAgregado'),
+        parentImage = travel
+    ul.id = lugar
+    ulProducto.appendChild(ul)
+    for (i = 0; i <= 3; i++) {
+        let li = document.createElement('li'), p = document.createElement('p')
+        ulProducto.children[index].appendChild(li)
         if (i == 0) {
-            const imagenProducto = document.createElement('img')
-            imagenProducto.src = parentImage
-            ulProducto.children[i].appendChild(imagenProducto)
-        }if(i == 1){
-            Precio = document.createElement("p")
-            Precio.innerText = parentPrecio
-            ulProducto.children[i].appendChild(Precio)
-        }
-        if(i == 2){
-            cantidadPr = document.createElement("p")
-            cantidadPr.innerText = cantProducto
-            ulProducto.children[i].appendChild(cantidadPr)
+            ulProducto.children[index].children[0].appendChild(document.createElement("img"))
+            ulProducto.children[index].children[0].children[0].src = parentImage
+        } if (i == 1) {
+            ulProducto.children[index].children[1].appendChild(p)
+            ulProducto.children[index].children[1].children[0].innerHTML = preciosViajes[lugar]
+        } if (i == 2) {
+            ulProducto.children[index].children[2].appendChild(p)
+            ulProducto.children[index].children[2].children[0].innerHTML = lugar
+        } if (i == 3) {
+            let button = document.createElement("button")
+            button.id = "btnEliminar" + index
+            button.className = "buttonEliminar"
+            ulProducto.children[index].children[3].appendChild(button)
         }
     }
-}/*
-function addAll(producto1,producto2){
-    let productos = [producto1,producto2];
-    for(i=0;i<productos.length;i++){
-        totalProducto += parseInt(productos[i].text);
+    if (index == 0) {
+        let div = document.createElement('div'), p = document.createElement('p')
+        div.id = "TotalDiv"
+        div.className = "divTotal"
+        divProductos.parentNode.appendChild(div).appendChild(p).innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
+    } else {
+        divProductos.parentNode.children[1].innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
     }
-    alert('Agregado $'+ totalProducto)
 
-
-}*/
+    btnEliminar = document.getElementById("btnEliminar" + index)
+    btnEliminar.addEventListener("click", () => eliminarCarrito(lugar, btn1.parentNode.children[1].children[0]))
+}

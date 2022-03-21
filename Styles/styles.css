@@ -15,8 +15,8 @@
   height: 100vh;
   -ms-grid-columns: auto auto;
       grid-template-columns: auto auto;
-  -ms-grid-rows: 10vh auto 10vh;
-      grid-template-rows: 10vh auto 10vh;
+  -ms-grid-rows: 10vh 70vh 0vh;
+      grid-template-rows: 10vh 70vh 0vh;
       grid-template-areas: "heade heade" "main main" "footer footer";
 }
 
@@ -120,12 +120,23 @@ main .containerProductos {
 }
 
 main .containerProductos .ProductoDiv {
-  display: inline-block;
-  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 350px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   text-align: center;
   background-color: gray;
   padding: 20px;
   margin: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
 }
 
 main .containerProductos .ProductoDiv img {
@@ -139,7 +150,7 @@ main .containerProductos .ProductoDiv button {
   border: none;
   background-color: #2e78b4;
   border-radius: 10px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 main .containerProductos .ProductoDiv button:hover {
@@ -160,9 +171,9 @@ main .productoAgregado {
   top: 0px;
   left: 0px;
   height: 100vh;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 main .productoAgregado .divListAgregado {
@@ -193,6 +204,24 @@ main .productoAgregado .divListAgregado ul li {
 
 main .productoAgregado .divListAgregado ul li img {
   max-width: 100px;
+}
+
+main .productoAgregado .divListAgregado ul li .buttonEliminar {
+  background: none;
+  background-image: url(../img/x.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 20px;
+  width: 20px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+main .productoAgregado .divTotal {
+  position: absolute;
+  right: 0;
+  bottom: 50%;
 }
 
 footer {
