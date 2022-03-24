@@ -7,11 +7,10 @@
     font-family: 'Roboto', sans-serif;
 }
 .container_grid{
-    display: grid;
     width: 100%;
     height: 100vh;
     grid-template-columns: auto auto;
-    grid-template-rows: 10vh 70vh 0vh;
+    grid-template-rows: 10vh 60vh 10vh;
     grid-template-areas: "heade heade" "main main" "footer footer";
 }
 header{
@@ -58,87 +57,100 @@ header{
     }
 }
 main{
-    grid-area: main;
+    width: 100%;
     position: relative;
-    .containerSlide{
-        text-align: center;
-    }
-    .containerProductos{
+    .containerSlider{
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
         width: 100%;
+        height: 300px;
+        .slider{
+            width: 0;
+            height: 300px;
+            .img{
+                width: 100%;
+                height: 100%;
+            }            
+        }
+        .active{
+            width: 100% !important;
+            height: 100%;
+        }
+    }
+    .containerProductos{
+        transition: all 1s;
+        grid-area: main;
+        display: flex;
+        padding: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
         .ProductoDiv{
-            display: flex;
-            flex-wrap: wrap;
-            width: 350px;
-            justify-content: center;
             text-align: center;
-            background-color: gray;
-            padding: 20px;
             margin: 5px;
-            align-items: center;
-            text-align: center;
-            img{
-                max-width: 300px;
-                max-height: 300px;
-            }
-            button{
-                width: 250px;
-                height: 50px;
-                border: none;
-                background-color: rgb(46, 120, 180);
-                border-radius: 10px;
-                margin-top: 5px;
-            }
-            button:hover{
-                transform: scale(1.1);
-                transition: transform 0.5s;
-                cursor: pointer;
-            }
+        }
+        img{
+            max-width: 250px;
+            width: 100%;
         }
     }
     .productoAgregado{
         position: absolute;
-        display: flex;
-        top: 0px;
-        left: 0px;
-        height: 100vh;
-        justify-content: center;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        text-align: center;
+        background-color: beige;
+        border-radius: 10px;
         .divListAgregado{
-            width: 20vw;
-            background-color: rgb(209, 206, 206);
-            border-radius: 0px 5px 5px 0px;
+            position: relative;
             ul{
                 display: flex;
-                justify-content: space-around;
+                animation: opacit 1s;
                 li{
                     display: flex;
-                    justify-content: center;
+                    text-align: center;
                     align-items: center;
+                    margin-right:15px;
+                    width: 110px;
                     img{
-                        max-width: 100px;
+                        max-width: 150px;
+                        width: 100%;
                     }
-                    .buttonEliminar{
+                    button{
+                        border: none;
                         background: none;
                         background-image: url(../img/x.png);
                         background-repeat: no-repeat;
-                        background-position: center;
-                        height: 20px;
+                        background-size: contain;
                         width: 20px;
-                        border: none;
-                        border-radius: 50%;
-                        cursor: pointer;
+                        height: 20px;
                     }
                 }
             }
-        }.divTotal{
-            position: absolute;
-            right: 0;
-            bottom: 50%;
         }
+    }.divTotal{
+        animation: opacit 1s;
     }
 }
 footer{
     grid-area: footer;
+}
+@keyframes opacit {
+    0%{
+        transform: translateX(-20px)
+    }
+    50%{
+        transform: translateX(5px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+@keyframes opacitOut {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }

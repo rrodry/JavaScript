@@ -1,14 +1,11 @@
-let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj")) || [], suma = 0,
+let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj")) || [], suma = 0,conSlider = document.getElementById("containerSlider"),imgSlider = [],
     btnEliminar;
 const divProductos = document.getElementById('divListAgregado'),
-    preciosViajes = JSON.parse(localStorage.getItem("preciosViajes")) || {}
-    btn1 = document.getElementById("btnRemera1"),
-    btn2 = document.getElementById("btnRemera2"),
-    btn3 = document.getElementById("btnRemera3")
-
-btn1.addEventListener("click", () => verificarCarrito(btn1.parentNode.children[1].children[0]))
-btn2.addEventListener("click", () => verificarCarrito(btn2.parentNode.children[1].children[0]))
-btn3.addEventListener("click", () => verificarCarrito(btn3.parentNode.children[1].children[0]))
+    preciosViajes = JSON.parse(localStorage.getItem("preciosViajes")) || {},
+    btn = document.querySelectorAll('.ProductoDiv button')
+    for (const button of btn) {
+        button.addEventListener("click", () => verificarCarrito(button.parentNode.children[1].children[0]))
+    }
 
 if (Object.keys(preciosViajes).length > 0) {
     for (const lugar in preciosViajes) {
@@ -30,8 +27,15 @@ function eliminarCarrito(lugar) {
             delete preciosViajes[lugar]
         }
     }if(arrObj.length == 0){
+        total.style.animation = "opacitOut 1s"
+        total.style.animationFillMode = "running"
+        producto.style.animation = "opacitOut 1s"
+        producto.style.animationFillMode = "running"
         localStorage.clear("arrObj","preciosViajes","productoTotal")
-        total.remove()
+        setTimeout(() => {
+            producto.remove()
+            total.remove()
+        }, 500)
         delete preciosViajes
     }else{
         let suma=0
@@ -43,9 +47,9 @@ function eliminarCarrito(lugar) {
         localStorage.setItem("arrObj",JSON.stringify(arrObj))
         localStorage.setItem("productoTotal",JSON.stringify(suma))
         localStorage.setItem("preciosViajes",JSON.stringify(preciosViajes))
-        divProductos.parentNode.children[1].innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
+        producto.remove()
+        divProductos.parentNode.children[1].textContent = "Total de viajes: " + localStorage.getItem("productoTotal")
     }
-    producto.remove()
 }
 function verificarCarrito(travel) {
     let lugar = travel.text, precio = travel.parentNode.children[1].text, cantProducto = parseInt(travel.parentNode.parentNode.children[2].value)
@@ -101,8 +105,9 @@ function verificarCarrito(travel) {
 }
 function createNewProducto(index, travel, lugar) {
     let ul = document.createElement('ul'), ulProducto = document.getElementById('divListAgregado'),
-        parentImage = travel
+    parentImage = travel
     ul.id = lugar
+    ul.style.animation = "opacit 1s"
     ulProducto.appendChild(ul)
     for (i = 0; i <= 3; i++) {
         let li = document.createElement('li'), p = document.createElement('p')
@@ -121,17 +126,17 @@ function createNewProducto(index, travel, lugar) {
             button.id = "btnEliminar" + index
             button.className = "buttonEliminar"
             ulProducto.children[index].children[3].appendChild(button)
+            button.addEventListener("click", () => eliminarCarrito(lugar))    
         }
     }
     if (index == 0) {
-        let div = document.createElement('div'), p = document.createElement('p')
+        let div = document.createElement('div'), p = document.createElement('p'),a = document.createElement('a')
         div.id = "TotalDiv"
         div.className = "divTotal"
-        divProductos.parentNode.appendChild(div).appendChild(p).innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
+        a.id = "TotalNumber"
+        divProductos.parentNode.appendChild(div).appendChild(p).appendChild(a).innerHTML = "Total de viajes: $" + localStorage.getItem("productoTotal")
     } else {
         divProductos.parentNode.children[1].innerHTML = "Total de viajes: " + localStorage.getItem("productoTotal")
     }
 
-    btnEliminar = document.getElementById("btnEliminar" + index)
-    btnEliminar.addEventListener("click", () => eliminarCarrito(lugar, btn1.parentNode.children[1].children[0]))
 }
