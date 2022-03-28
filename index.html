@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <title>Inicio</title>
 </head>
 <body>
@@ -15,47 +16,59 @@
     <header>
         <nav>
             <ul class="pages">
-                <li>Incio</li>
-                <li>Agregar Productos</li>
+                <li><p>Incio</p></li>
+                <li id="liAddProduct">Agregar Productos</li>
             </ul>
             <ul class="login">
-                <li>Login</li>
-                <li>Registro</li>
+                <li><p>Login</p></li>
+                <li><p>Registro</p></li>
                 <li><input type="text" class="deleteCart" onclick="deleteCart()" value="Elminar Carrito"></li>
             </ul>
         </nav>
     </header>
     <main id="main">
         <div class="containerSlider" id="containerSlider">
+            <button class="buttonSlider" ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
+              </svg></button>
+              <button class="buttonSlider left"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+              </svg></button>
             <div class="slider">
-                <img src="img/travel-1.jpg" class="img">
-            </div>
-            <div class="slider">
-                <img src="img/travel-2.jpg" class="img">
+                <div class="sliderImg active">
+                    <img src="img/travel-1.jpg" class="img">
+                </div>
+                <div class="sliderImg inactive">
+                    <img src="img/travel-2.jpg" class="img">
+                </div>
+                <div class="sliderImg inactive">
+                    <img src="img/Viajes.jpeg" class="img">
+                </div>
             </div>
         </div>
-        <div class="containerProductos">
-            <div class="ProductoDiv">
-                <img src="img/cataratas.jpg" alt="Remera Negra">
-                <p>Viaja a <a class="travel">cataratas</a> <a class="price">37000</a></p>
-                <input type="text" placeholder="Pasajeros" required>
-                <button id="btnRemera1">Ir de viaje</button>
-            </div>
-            <div class="ProductoDiv" id="remera">
-                <img src="img/peritomoreno.jpg" alt="Remera Negra">
-                <p>Viaja a <a class="travel">Perito Moreno</a> <a class="price">67001</a></p>
-                <input type="text" placeholder="Pasajeros" >
-                <button id="btnRemera2">Ir de viaje</button>
-            </div>
-            <div class="ProductoDiv" id="remera">
-                <img src="img/peritomoreno.jpg" alt="Remera Negra">
-                <p>Viaja a <a class="travel">Imalaya</a> <a class="price">500</a></p>
-                <input type="text" placeholder="Pasajeros" >
-                <button id="btnRemera3">Ir de viaje</button>
-            </div>
+        <div class="containerProductos" id="test">
         </div>
-        <div class="productoAgregado">
+        <div class="productoAgregado" >
             <div class="divListAgregado" id="divListAgregado">
+            </div>
+        </div>
+        <div class="containerModal">
+            <div class="modalAgregarProd">
+                <div class="divAgregarProducto">
+                    <p>Viaje</p>
+                    <input type="text" id="inpViaje" class="inptAgregar">
+                </div>
+                <div class="divAgregarProducto">
+                    <p>Precio</p>
+                    <input type="text" id="inpPrecio" class="inptAgregar">
+                </div>
+                <div class="divAgregarProducto">
+                    <p>Imagen</p>
+                    <input type="file" id="inpImagen" class="inptAgregar">
+                </div>
+                <div class="divAgregarProductoBtn">
+                    <button id="btnAddProd">Agregar Producto</button>
+                </div>
             </div>
         </div>
     </main>

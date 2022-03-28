@@ -7,17 +7,18 @@
     font-family: 'Roboto', sans-serif;
 }
 .container_grid{
+    display: grid;
     width: 100%;
     height: 100vh;
     grid-template-columns: auto auto;
-    grid-template-rows: 10vh 60vh 10vh;
+    grid-template-rows: 10vh auto 10vh;
     grid-template-areas: "heade heade" "main main" "footer footer";
 }
 header{
     grid-area: heade;
     font-weight: 700;
     overflow: hidden;
-    background-color: hotpink;
+    background-color: rgb(105, 165, 255);
     display: grid;
     align-content: center;
     nav{
@@ -29,6 +30,9 @@ header{
                 grid-area: pages;
                 justify-content: center;
                 li{
+                    display: flex;
+                    text-align: center;
+                    align-items: center;
                     margin: 10px;
                 }
             }
@@ -50,31 +54,60 @@ header{
             }
         }
         .pages li:hover, .login li:hover{
-            transform: scale(1.2);
-            transition: transform 1s;
+            transform: scale(1.1);
+            transition: transform 0.5s ease-in-out;
             cursor: pointer;
         }
     }
 }
 main{
+    grid-area: main;
     width: 100%;
     position: relative;
     .containerSlider{
         display: flex;
+        position: relative;
         justify-content: center;
         width: 100%;
-        height: 300px;
+        height: 500px;
         .slider{
-            width: 0;
-            height: 300px;
-            .img{
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            .sliderImg{
                 width: 100%;
-                height: 100%;
-            }            
+                height: 500px;
+                .img{
+                    width: 100%;
+                    height: 100%;
+                }          
+            }
+            .active{
+                display: inline-block;
+            }
+            .inactive{
+                display: none;
+            }
         }
-        .active{
-            width: 100% !important;
-            height: 100%;
+        .buttonSlider{
+            z-index: 1;
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top:120px;
+            right: 0;
+            border-radius: 50%;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .buttonSlider:hover{
+            transform: scale(1.2);
+            transition: transform 1s;
+        }
+        .left{
+            left: 0;
         }
     }
     .containerProductos{
@@ -87,6 +120,8 @@ main{
         .ProductoDiv{
             text-align: center;
             margin: 5px;
+            flex-wrap: wrap;
+            max-width: 250px;
         }
         img{
             max-width: 250px;
@@ -131,9 +166,55 @@ main{
     }.divTotal{
         animation: opacit 1s;
     }
+    .containerModal{
+        display: none;
+        position: absolute;
+        top:0;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.7);
+        justify-content: center;
+        .modalAgregarProd{
+            display: flex;
+            width: 80%;
+            justify-content: center;
+            height: 150px;
+            flex-wrap: wrap;
+            align-content: center;
+            .divAgregarProducto,.divAgregarProductoBtn{
+                display: inline-flex;
+                color: wheat;
+                margin: 5px;
+                align-items: center;
+                align-content: flex-end;
+                animation: opacit 1s ease-in-out;
+            }
+            .divAgregarProductoBtn button{
+                background: none;
+                border: none;
+                background-color: #58e953;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0px 0px 7px 4px rgba(0,0,0,0.75) inset;
+                cursor: pointer;
+            }
+            .divAgregarProductoBtn button:hover{
+                transform: scale(1.1);
+                box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.75) inset;
+                transition: transform 0.5s,box-shadow 0.5s;
+            }
+            .divAgregarProductoBtn button:not(:hover){
+                transform: scale(1);
+                box-shadow: 0px 0px 7px 4px rgba(0,0,0,0.75) inset;
+                transition: transform 0.5s,box-shadow 0.5s;
+            }
+        }
+    }
 }
 footer{
     grid-area: footer;
+    background-color: red;
 }
 @keyframes opacit {
     0%{

@@ -9,12 +9,14 @@
 }
 
 .container_grid {
+  display: -ms-grid;
+  display: grid;
   width: 100%;
   height: 100vh;
   -ms-grid-columns: auto auto;
       grid-template-columns: auto auto;
-  -ms-grid-rows: 10vh 60vh 10vh;
-      grid-template-rows: 10vh 60vh 10vh;
+  -ms-grid-rows: 10vh auto 10vh;
+      grid-template-rows: 10vh auto 10vh;
       grid-template-areas: "heade heade" "main main" "footer footer";
 }
 
@@ -25,7 +27,7 @@ header {
   grid-area: heade;
   font-weight: 700;
   overflow: hidden;
-  background-color: hotpink;
+  background-color: #69a5ff;
   display: -ms-grid;
   display: grid;
   -ms-flex-line-pack: center;
@@ -53,6 +55,13 @@ header nav .pages {
 }
 
 header nav .pages li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 10px;
 }
 
@@ -84,16 +93,20 @@ header nav .login .deleteCart {
 }
 
 header nav .pages li:hover, header nav .login li:hover {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-  -webkit-transition: -webkit-transform 1s;
-  transition: -webkit-transform 1s;
-  transition: transform 1s;
-  transition: transform 1s, -webkit-transform 1s;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  transition: -webkit-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
   cursor: pointer;
 }
 
 main {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: main;
   width: 100%;
   position: relative;
 }
@@ -102,26 +115,67 @@ main .containerSlider {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
-  height: 300px;
+  height: 500px;
 }
 
 main .containerSlider .slider {
-  width: 0;
-  height: 300px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
 }
 
-main .containerSlider .slider .img {
+main .containerSlider .slider .sliderImg {
+  width: 100%;
+  height: 500px;
+}
+
+main .containerSlider .slider .sliderImg .img {
   width: 100%;
   height: 100%;
 }
 
-main .containerSlider .active {
-  width: 100% !important;
-  height: 100%;
+main .containerSlider .slider .active {
+  display: inline-block;
+}
+
+main .containerSlider .slider .inactive {
+  display: none;
+}
+
+main .containerSlider .buttonSlider {
+  z-index: 1;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 120px;
+  right: 0;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+main .containerSlider .buttonSlider:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+}
+
+main .containerSlider .left {
+  left: 0;
 }
 
 main .containerProductos {
@@ -145,6 +199,9 @@ main .containerProductos {
 main .containerProductos .ProductoDiv {
   text-align: center;
   margin: 5px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  max-width: 250px;
 }
 
 main .containerProductos img {
@@ -206,11 +263,88 @@ main .divTotal {
           animation: opacit 1s;
 }
 
+main .containerModal {
+  display: none;
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .containerModal .modalAgregarProd {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 80%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 150px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal .modalAgregarProd .divAgregarProductoBtn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  color: wheat;
+  margin: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: end;
+      align-content: flex-end;
+  -webkit-animation: opacit 1s ease-in-out;
+          animation: opacit 1s ease-in-out;
+}
+
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button {
+  background: none;
+  border: none;
+  background-color: #58e953;
+  padding: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.75) inset;
+          box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.75) inset;
+  cursor: pointer;
+}
+
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.75) inset;
+          box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.75) inset;
+  -webkit-transition: -webkit-transform 0.5s,-webkit-box-shadow 0.5s;
+  transition: -webkit-transform 0.5s,-webkit-box-shadow 0.5s;
+  transition: transform 0.5s,box-shadow 0.5s;
+  transition: transform 0.5s,box-shadow 0.5s,-webkit-transform 0.5s,-webkit-box-shadow 0.5s;
+}
+
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button:not(:hover) {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.75) inset;
+          box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.75) inset;
+  -webkit-transition: -webkit-transform 0.5s,-webkit-box-shadow 0.5s;
+  transition: -webkit-transform 0.5s,-webkit-box-shadow 0.5s;
+  transition: transform 0.5s,box-shadow 0.5s;
+  transition: transform 0.5s,box-shadow 0.5s,-webkit-transform 0.5s,-webkit-box-shadow 0.5s;
+}
+
 footer {
   -ms-grid-row: 3;
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: footer;
+  background-color: red;
 }
 
 @-webkit-keyframes opacit {
