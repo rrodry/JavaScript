@@ -17,8 +17,8 @@ addProduBtn.addEventListener("click", () => {
         arrProductos.push(value.children[1].value)
     }
     localStorage.setItem("productosHTML",JSON.stringify(arrProductos))
-    createHTML()
-} )
+    $('#test').load(location.href + " #test2")
+})
 let openProd = document.getElementById("liAddProduct")
 openProd.addEventListener("click", openModal => {
     let modal = document.getElementsByClassName("containerModal")
@@ -32,7 +32,7 @@ openProd.addEventListener("click", openModal => {
         modal[0].style.opacity = "1"
     }
 })
-
+createHTML() 
 //createHTML
 function createHTML(){
 for(i=0;arrProductos.length>i;i+=3){
@@ -64,6 +64,7 @@ for(i=0;arrProductos.length>i;i+=3){
         div.appendChild(button)
         date.type = "date"
         div.appendChild(date)
+        div.id ="test"
         divContainer[0].appendChild(div)
 }}
 const btn = document.querySelectorAll('.ProductoDiv button')
