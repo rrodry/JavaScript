@@ -17,7 +17,9 @@ addProduBtn.addEventListener("click", () => {
         arrProductos.push(value.children[1].value)
     }
     localStorage.setItem("productosHTML",JSON.stringify(arrProductos))
-    $('#test').load(location.href + " #test2")
+    window.location.reload()
+    // Agregando la actu del div con jquery todavia no me funciona T,T
+    //$('#test').load(location.href + " #test2")
 })
 let openProd = document.getElementById("liAddProduct")
 openProd.addEventListener("click", openModal => {
@@ -206,7 +208,7 @@ function createNewProducto(index, travel, lugar) {
 
 }
 //SliderInterval
-/*setInterval(() => {
+setInterval(() => {
     const sliderObj = document.querySelectorAll('.sliderImg')
         sliderObj[contImg].animate([
             {transform:'translateX(0px)'},
@@ -246,4 +248,3 @@ function createNewProducto(index, travel, lugar) {
         
     }
 , 5000);
-*/
