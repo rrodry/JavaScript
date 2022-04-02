@@ -166,6 +166,23 @@ main{
     }.divTotal{
         animation: opacit 1s;
     }
+    .climaCss{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        ul{
+            margin: 5px;
+            li{
+                background-color: rgb(252, 244, 244);
+                display: flex;
+                justify-content: center;
+            }
+            li:nth-child(5),li:nth-child(9){
+                border-radius: 5px 5px 0px 0px;
+                margin-top: 5px;
+            }
+        }
+    }
     .containerModal{
         display: none;
         position: absolute;

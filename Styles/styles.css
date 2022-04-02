@@ -263,6 +263,35 @@ main .divTotal {
           animation: opacit 1s;
 }
 
+main .climaCss {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+main .climaCss ul {
+  margin: 5px;
+}
+
+main .climaCss ul li {
+  background-color: #fcf4f4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .climaCss ul li:nth-child(5), main .climaCss ul li:nth-child(9) {
+  border-radius: 5px 5px 0px 0px;
+  margin-top: 5px;
+}
+
 main .containerModal {
   display: none;
   position: absolute;
