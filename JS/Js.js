@@ -162,6 +162,7 @@ function verificarCarrito(travel) {
                     localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
                 }
                 travel.parentNode.parentNode.children[2].value = ""
+
             } else {
                 suma = preciosViajes[lugar] * cantProducto
                 arrObj.unshift(parentimg)
@@ -177,6 +178,7 @@ function verificarCarrito(travel) {
     
                 localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
                 travel.parentNode.parentNode.children[2].value = ""
+
             }
             createNewProducto(size.length, parentimg, lugar)
         } else {
@@ -206,6 +208,7 @@ function verificarCarrito(travel) {
             title: "Falta un dato"
         })
     }
+    travel.parentNode.parentNode.children[4].value = ""
 }
 
 function createNewProducto(index, travel, lugar) {
