@@ -265,7 +265,7 @@ function clima() {
     }
     function climaCreate(city) {
         indexUl = 0
-        fetch("http://api.weatherapi.com/v1/forecast.json?key=" + key + "&q=" + city + "&days=3&aqi=no&alerts=no&lang=es")
+        fetch("https://api.weatherapi.com/v1/forecast.json?key=" + key + "&q=" + city + "&days=3&aqi=no&alerts=no&lang=es")
             .then(
                 (res) => res.json())
             .then(
