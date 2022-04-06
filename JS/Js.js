@@ -338,7 +338,7 @@ document.getElementById("btnDelProd").addEventListener("click", () => {
 })
 
 
-/*let interval = setInterval(() => {
+let interval = setInterval(() => {
     slider()
 }, 3000);
 function slider(button){
@@ -420,4 +420,4 @@ function slider(button){
             slider()
         }, 3000);
     }
-}*/
+}
