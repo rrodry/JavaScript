@@ -293,34 +293,37 @@ main .climaCss ul li:nth-child(5), main .climaCss ul li:nth-child(9) {
 }
 
 main .containerModal {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   display: none;
   position: absolute;
+  height: 90vh;
   top: 0;
   z-index: 3;
   width: 100%;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
 }
 
-main .containerModal .modalAgregarProd {
+main .containerModal .modalAgregarProd, main .containerModal .eliminarProducto {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 80%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 150px;
+  height: 100px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   -ms-flex-line-pack: center;
       align-content: center;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal .modalAgregarProd .divAgregarProductoBtn {
+main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal .modalAgregarProd .divAgregarProductoBtn, main .containerModal .modalAgregarProd .divEliminarProducto, main .containerModal .eliminarProducto .divAgregarProducto, main .containerModal .eliminarProducto .divAgregarProductoBtn, main .containerModal .eliminarProducto .divEliminarProducto {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -335,7 +338,7 @@ main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal
           animation: opacit 1s ease-in-out;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProductoBtn button {
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button, main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .eliminarProducto .divAgregarProductoBtn button, main .containerModal .eliminarProducto .divEliminarProducto button {
   background: none;
   border: none;
   background-color: #58e953;
@@ -346,7 +349,11 @@ main .containerModal .modalAgregarProd .divAgregarProductoBtn button {
   cursor: pointer;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover {
+main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .eliminarProducto .divEliminarProducto button {
+  background-color: #f35e5e;
+}
+
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover, main .containerModal .modalAgregarProd .divEliminarProducto button:hover, main .containerModal .eliminarProducto .divAgregarProductoBtn button:hover, main .containerModal .eliminarProducto .divEliminarProducto button:hover {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   -webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.75) inset;
@@ -357,7 +364,7 @@ main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover {
   transition: transform 0.5s,box-shadow 0.5s,-webkit-transform 0.5s,-webkit-box-shadow 0.5s;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProductoBtn button:not(:hover) {
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button:not(:hover), main .containerModal .modalAgregarProd .divEliminarProducto button:not(:hover), main .containerModal .eliminarProducto .divAgregarProductoBtn button:not(:hover), main .containerModal .eliminarProducto .divEliminarProducto button:not(:hover) {
   -webkit-transform: scale(1);
           transform: scale(1);
   -webkit-box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.75) inset;

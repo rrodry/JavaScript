@@ -1,49 +1,53 @@
-
-
 let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj")) || [], suma = 0, conSlider = document.getElementById("containerSlider"), imgSlider = [],
-    btnEliminar, contImg = 0, arrProductos = JSON.parse(localStorage.getItem("productosHTML")) || [];
+    btnEliminar, contImg = 0, arrProductos = JSON.parse(localStorage.getItem("productosHTML")) || [], btnProd = document.querySelectorAll('.ProductoDiv button');
 const
     divProductos = document.getElementById('divListAgregado'),
     preciosViajes = JSON.parse(localStorage.getItem("preciosViajes")) || {},
     btnSlider = document.querySelectorAll('.buttonSlider')
-//Buttons
+//Buttons Slider
 for (const button of btnSlider) {
     button.addEventListener("click", () => slider(button))
 }
-
+//Btn AddProd
 let addProduBtn = document.getElementById("btnAddProd")
 addProduBtn.addEventListener("click", () => {
     const productoAAgregado = document.querySelectorAll('.divAgregarProducto')
     for (const value of productoAAgregado) {
         arrProductos.push(value.children[1].value)
+        value.children[1].value = ""
     }
     localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
     document.getElementById("test2").innerHTML = ""
     createHTML()
     clima()
 })
-
+//Button Modal
 let openProd = document.getElementById("liAddProduct")
 openProd.addEventListener("click", openModal => {
     let modal = document.getElementsByClassName("containerModal")
     const style = getComputedStyle(modal[0])
-    if (style.display == "flex" && modal[0].style.display == "flex") {
+    if (style.display == "block" && modal[0].style.display == "block") {
         modal[0].style.display = "none"
         modal[0].style.opacity = "0"
-        openProd.innerHTML="Agregar Productos"
+        openProd.innerHTML = "Agregar Productos"
         for (const button of btn) {
-            button.addEventListener("click", () => verificarCarrito(button.parentNode.children[1].children[0]))
-        }
+            if (button[button] == undefined) {
 
+            } else { button.addEventListener("click", () => verificarCarrito(button.parentNode.children[1].children[0])) }
+        }
     } else {
-        modal[0].style.display = "flex"
+        modal[0].style.display = "block"
         modal[0].style.opacity = "1"
-        openProd.innerHTML ="Cerrar"
+        openProd.innerHTML = "Cerrar"
     }
 })
-
+//btn Ir viaje
+for (const key of btnProd) {
+    key.addEventListener("click", () => verificarCarrito(key.parentNode.children[1].children[0]))
+}
 //createHTML
 createHTML()
+//crear Clima
 clima()
 function createHTML() {
     for (i = 0; arrProductos.length > i; i += 3) {
@@ -78,12 +82,10 @@ function createHTML() {
         div.id = "test"
         divContainer[0].appendChild(div)
     }
-}
-
-const btn = document.querySelectorAll('.ProductoDiv button')
-
-for (const button of btn) {
-    button.addEventListener("click", () => verificarCarrito(button.parentNode.children[1].children[0]))
+    btnProd = document.querySelectorAll('.ProductoDiv button')
+    for (const key of btnProd) {
+        key.addEventListener("click", () => verificarCarrito(key.parentNode.children[1].children[0]))
+    }
 }
 
 if (Object.keys(preciosViajes).length > 0) {
@@ -101,12 +103,12 @@ if (Object.keys(preciosViajes).length > 0) {
 function eliminarCarrito(lugar) {
     let producto = document.getElementById(lugar), total = document.getElementById("TotalDiv")
     swal({
-        title:"Estas seguro que deseas eliminar " + lugar + "?",
+        title: "Estas seguro que deseas eliminar " + lugar + "?",
         icon: "warning",
         button: true,
         dangerMode: true
-    }).then((willdelete)=>{
-        if (willdelete){
+    }).then((willdelete) => {
+        if (willdelete) {
             for (i = 0; i <= arrObj.length; i++) {
                 if (lugar == arrObj[i]) {
                     arrObj.splice(i, 3);
@@ -137,10 +139,10 @@ function eliminarCarrito(lugar) {
                 localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
                 producto.remove()
                 divProductos.parentNode.children[1].textContent = "Total de viajes: " + localStorage.getItem("productoTotal")
-            }swal(lugar + " Se elimino")
+            } swal(lugar + " Se elimino")
         }
     })
-    
+
 }
 
 function verificarCarrito(travel) {
@@ -148,7 +150,7 @@ function verificarCarrito(travel) {
         size = Object.keys(preciosViajes)
     parentimg = travel.parentNode.parentNode.children[0].src
     productoTotal = 0, datelocal = moment().format("YYYY/MM/DD")
-    if(!isNaN(cantProducto) && travel.parentNode.parentNode.children[4].value != "" && moment(travel.parentNode.parentNode.children[4].value).format("YYYY/MM/DD") > datelocal ){
+    if (!isNaN(cantProducto) && travel.parentNode.parentNode.children[4].value != "" && moment(travel.parentNode.parentNode.children[4].value).format("YYYY/MM/DD") > datelocal) {
         if (!preciosViajes.hasOwnProperty(lugar)) {
             preciosViajes[lugar] = parseInt(precio)
             if (size.length == 0) {
@@ -175,7 +177,7 @@ function verificarCarrito(travel) {
                 });
                 localStorage.setItem("productoTotal", productoTotal)
                 localStorage.setItem("arrObj", JSON.stringify(arrObj))
-    
+
                 localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
                 travel.parentNode.parentNode.children[2].value = ""
 
@@ -201,9 +203,9 @@ function verificarCarrito(travel) {
         swal({
             title: "Producto Agregado",
             text: arrObj[0] + " x " + cantProducto + "  para el dia " + date.format("DD/MM/YYYY"),
-            button:"Aceptar"
+            button: "Aceptar"
         })
-    }else{
+    } else {
         swal({
             title: "Falta un dato"
         })
@@ -271,36 +273,36 @@ function clima() {
             .then(
                 (data) => {
                     let dvclima = document.getElementById("clima"),
-                    ul = document.createElement("ul")
+                        ul = document.createElement("ul")
                     ul.id = city
-                    dvclima.appendChild(ul)        
+                    dvclima.appendChild(ul)
                     for (const key of data.forecast.forecastday) {
                         let maxTemp = key.day.maxtemp_c,
                             sensTerm = key.day.avgtemp_c,
                             estado = key.day.condition.text,
                             icon = key.day.condition.icon
 
-                            for (i = 0; i < 4; i++) {
-                            let li = document.createElement("li"),p = document.createElement("p")
-                            if (i == 0){
+                        for (i = 0; i < 4; i++) {
+                            let li = document.createElement("li"), p = document.createElement("p")
+                            if (i == 0) {
                                 let date = moment(key.date).format(' DD/MM/YY ')
                                 p.innerHTML = city.toUpperCase() + " -  " + data.location.region.toUpperCase() + date
                                 li.appendChild(p)
                             }
-                            if (i == 1){
+                            if (i == 1) {
                                 img = document.createElement("img")
                                 li.appendChild(img)
                                 li.children[0].src = icon
                             }
-                            if (i == 2){
+                            if (i == 2) {
                                 p.innerHTML = "Sens.T Maxima: " + sensTerm + "°C"
                                 li.appendChild(p)
                             }
-                            if (i == 3){
-                                p.innerHTML = "Temp. Max: " + maxTemp + "°C"   
+                            if (i == 3) {
+                                p.innerHTML = "Temp. Max: " + maxTemp + "°C"
                                 li.appendChild(p)
                             }
-                            if( i == 4){
+                            if (i == 4) {
                                 p.innerHTML = estado
                                 li.appendChild(p)
                             }
@@ -313,44 +315,109 @@ function clima() {
     }
 }
 
-//SliderInterval
-/*setInterval(() => {
-    const sliderObj = document.querySelectorAll('.sliderImg')
-    sliderObj[contImg].animate([
-        { transform: 'translateX(0px)' },
-        { transform: 'translateX(-1500px)' },
-        { transition: 'all 1s' }
-
-    ], {
-        duration: 1000
-    })
-    setTimeout(() => {
-        if (contImg == sliderObj.length - 1) {
-            contImg = 0
-            sliderObj[contImg].className = "sliderImg active"
-            sliderObj[contImg].animate([
-                { transform: 'translateX(1500px)' },
-                { transform: 'translateX(0px)' },
-                { transition: 'all 1s' }
-
-            ], {
-                duration: 1000
-            })
-            sliderObj[sliderObj.length - 1].className = "sliderImg inactive"
-        } else {
-            sliderObj[contImg].className = "sliderImg inactive"
-            sliderObj[contImg + 1].className = "sliderImg active"
-            sliderObj[contImg + 1].animate([
-                { transform: 'translateX(1500px)' },
-                { transform: 'translateX(0px)' },
-                { transition: 'all 1s' }
-
-            ], {
-                duration: 1000
-            })
-            contImg++
+//Btn Eliminar
+document.getElementById("btnDelProd").addEventListener("click", () => {
+    let vEliminar = document.getElementById("txtDelProd").value
+    for (i = 0; i <= arrProductos.length; i++) {
+        if (vEliminar == arrProductos[i]) {
+            //Elimnar HTML
+            arrProductos.splice(i, 3)
+            localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
+            document.getElementById("test2").innerHTML = ""
+            document.getElementById("clima").innerHTML = ""
+            createHTML()
+            clima()
+            //Eliminar del array
+            eliminarCarrito(arrProductos[i])
         }
-    }, 500);
+    }
 
-}
-    , 5000);*/
+
+
+
+})
+
+
+/*let interval = setInterval(() => {
+    slider()
+}, 3000);
+function slider(button){
+    const sliderObj = document.querySelectorAll('.sliderImg')
+    if(button == undefined || button.className == "buttonSlider"){
+        sliderObj[contImg].animate([
+            { transform: 'translateX(0px)' },
+            { transform: 'translateX(-1500px)' },
+            { transition: 'all 1s' }
+        ], {
+            duration: 1000
+        })
+        setTimeout(() => {
+            if (contImg == sliderObj.length - 1) {
+                contImg = 0
+                sliderObj[contImg].className = "sliderImg active"
+                sliderObj[contImg].animate([
+                    { transform: 'translateX(1500px)' },
+                    { transform: 'translateX(0px)' },
+                    { transition: 'all 1s' }
+
+                ], {
+                    duration: 1000
+                })
+                sliderObj[sliderObj.length - 1].className = "sliderImg inactive"
+            } else {
+                sliderObj[contImg].className = "sliderImg inactive"
+                sliderObj[contImg + 1].className = "sliderImg active"
+                sliderObj[contImg + 1].animate([
+                    { transform: 'translateX(1500px)' },
+                    { transform: 'translateX(0px)' },
+                    { transition: 'all 1s' }
+
+                ], {
+                    duration: 1000
+                })
+                contImg++
+            }
+        }, 500);
+    }else{
+        sliderObj[contImg].animate([
+            { transform: 'translateX(0px)' },
+            { transform: 'translateX(1500px)' },
+            { transition: 'all 1s' }
+        ], {
+            duration: 1000
+        })
+        setTimeout(() => {
+            if (contImg == 0) {
+                sliderObj[contImg].className = "sliderImg inactive"
+                contImg = sliderObj.length - 1
+                sliderObj[contImg].className = "sliderImg active"
+                sliderObj[contImg].animate([
+                    { transform: 'translateX(-1500px)' },
+                    { transform: 'translateX(0px)' },
+                    { transition: 'all 1s' }
+
+                ], {
+                    duration: 1000
+                })
+            } else {
+                sliderObj[contImg].className = "sliderImg inactive"
+                sliderObj[contImg - 1].className = "sliderImg active"
+                sliderObj[contImg - 1].animate([
+                    { transform: 'translateX(-1500px)' },
+                    { transform: 'translateX(0px)' },
+                    { transition: 'all 1s' }
+                    
+                ], {
+                    duration: 1000
+                })
+                contImg--
+            }
+        }, 500);
+    }
+    if ( button.className == "buttonSlider" ||  button.className == "buttonSlider left"){
+        clearInterval(interval)
+        interval = setInterval(() => {
+            slider()
+        }, 3000);
+    }
+}*/

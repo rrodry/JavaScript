@@ -19,15 +19,11 @@
                 <li><p>Incio</p></li>
                 <li id="liAddProduct">Agregar Productos</li>
             </ul>
-            <ul class="login">
-                <li><p>Login</p></li>
-                <li><p>Registro</p></li>
-            </ul>
         </nav>
     </header>
     <main id="main">
         <div class="containerSlider" id="containerSlider">
-            <button class="buttonSlider" ><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+            <button class="buttonSlider" id = "buttonSlider"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
                 <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/>
               </svg></button>
               <button class="buttonSlider left"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
@@ -69,6 +65,15 @@
                 </div>
                 <div class="divAgregarProductoBtn">
                     <button id="btnAddProd">Agregar Producto</button>
+                </div>
+            </div>
+            <div class="eliminarProducto">
+                <div class="divEliminarProducto">
+                    <p>Viaje</p>
+                    <input type="text" id="txtDelProd" class="inptAgregar">
+                </div>
+                <div class="divEliminarProducto">
+                    <button id="btnDelProd">Eliminar Producto</button>
                 </div>
             </div>
         </div>
