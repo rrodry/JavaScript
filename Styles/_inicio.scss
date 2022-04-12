@@ -194,13 +194,13 @@ main{
         background-color: rgba($color: #000000, $alpha: 0.7);
         justify-content: center;
         backdrop-filter:  blur(8px);
-        .modalAgregarProd,.eliminarProducto{
+        .modalAgregarProd,.eliminarProducto,.agregarImgSlider,.eliminarSlider{
             display: flex;
             justify-content: center;
             height: 100px;
             flex-wrap: wrap;
             align-content: center;
-            .divAgregarProducto,.divAgregarProductoBtn,.divEliminarProducto{
+            .divAgregarProducto,.divAgregarProductoBtn,.divEliminarProducto,.divImagenSlider,.divImagenDelSlider{
                 display: inline-flex;
                 color: wheat;
                 margin: 5px;
@@ -208,7 +208,7 @@ main{
                 align-content: flex-end;
                 animation: opacit 1s ease-in-out;
             }
-            .divAgregarProductoBtn button,.divEliminarProducto button{
+            .divAgregarProductoBtn button,.divEliminarProducto button,.divImagenSlider button,.divImagenDelSlider button{
                 background: none;
                 border: none;
                 background-color: #58e953;
@@ -217,8 +217,11 @@ main{
                 box-shadow: 0px 0px 7px 4px rgba(0,0,0,0.75) inset;
                 cursor: pointer;
             }
-            .divEliminarProducto button{
+            .divEliminarProducto button,.divImagenDelSlider button{
                 background-color: rgb(243, 94, 94);
+            }
+            .divImagenDelSlider img{
+                width: 100px;
             }
             .divAgregarProductoBtn button:hover,.divEliminarProducto button:hover{
                 transform: scale(1.1);

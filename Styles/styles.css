@@ -309,7 +309,7 @@ main .containerModal {
           backdrop-filter: blur(8px);
 }
 
-main .containerModal .modalAgregarProd, main .containerModal .eliminarProducto {
+main .containerModal .modalAgregarProd, main .containerModal .eliminarProducto, main .containerModal .agregarImgSlider, main .containerModal .eliminarSlider {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -323,7 +323,7 @@ main .containerModal .modalAgregarProd, main .containerModal .eliminarProducto {
       align-content: center;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal .modalAgregarProd .divAgregarProductoBtn, main .containerModal .modalAgregarProd .divEliminarProducto, main .containerModal .eliminarProducto .divAgregarProducto, main .containerModal .eliminarProducto .divAgregarProductoBtn, main .containerModal .eliminarProducto .divEliminarProducto {
+main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal .modalAgregarProd .divAgregarProductoBtn, main .containerModal .modalAgregarProd .divEliminarProducto, main .containerModal .modalAgregarProd .divImagenSlider, main .containerModal .modalAgregarProd .divImagenDelSlider, main .containerModal .eliminarProducto .divAgregarProducto, main .containerModal .eliminarProducto .divAgregarProductoBtn, main .containerModal .eliminarProducto .divEliminarProducto, main .containerModal .eliminarProducto .divImagenSlider, main .containerModal .eliminarProducto .divImagenDelSlider, main .containerModal .agregarImgSlider .divAgregarProducto, main .containerModal .agregarImgSlider .divAgregarProductoBtn, main .containerModal .agregarImgSlider .divEliminarProducto, main .containerModal .agregarImgSlider .divImagenSlider, main .containerModal .agregarImgSlider .divImagenDelSlider, main .containerModal .eliminarSlider .divAgregarProducto, main .containerModal .eliminarSlider .divAgregarProductoBtn, main .containerModal .eliminarSlider .divEliminarProducto, main .containerModal .eliminarSlider .divImagenSlider, main .containerModal .eliminarSlider .divImagenDelSlider {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -338,7 +338,7 @@ main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal
           animation: opacit 1s ease-in-out;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProductoBtn button, main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .eliminarProducto .divAgregarProductoBtn button, main .containerModal .eliminarProducto .divEliminarProducto button {
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button, main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .modalAgregarProd .divImagenSlider button, main .containerModal .modalAgregarProd .divImagenDelSlider button, main .containerModal .eliminarProducto .divAgregarProductoBtn button, main .containerModal .eliminarProducto .divEliminarProducto button, main .containerModal .eliminarProducto .divImagenSlider button, main .containerModal .eliminarProducto .divImagenDelSlider button, main .containerModal .agregarImgSlider .divAgregarProductoBtn button, main .containerModal .agregarImgSlider .divEliminarProducto button, main .containerModal .agregarImgSlider .divImagenSlider button, main .containerModal .agregarImgSlider .divImagenDelSlider button, main .containerModal .eliminarSlider .divAgregarProductoBtn button, main .containerModal .eliminarSlider .divEliminarProducto button, main .containerModal .eliminarSlider .divImagenSlider button, main .containerModal .eliminarSlider .divImagenDelSlider button {
   background: none;
   border: none;
   background-color: #58e953;
@@ -349,11 +349,15 @@ main .containerModal .modalAgregarProd .divAgregarProductoBtn button, main .cont
   cursor: pointer;
 }
 
-main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .eliminarProducto .divEliminarProducto button {
+main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .modalAgregarProd .divImagenDelSlider button, main .containerModal .eliminarProducto .divEliminarProducto button, main .containerModal .eliminarProducto .divImagenDelSlider button, main .containerModal .agregarImgSlider .divEliminarProducto button, main .containerModal .agregarImgSlider .divImagenDelSlider button, main .containerModal .eliminarSlider .divEliminarProducto button, main .containerModal .eliminarSlider .divImagenDelSlider button {
   background-color: #f35e5e;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover, main .containerModal .modalAgregarProd .divEliminarProducto button:hover, main .containerModal .eliminarProducto .divAgregarProductoBtn button:hover, main .containerModal .eliminarProducto .divEliminarProducto button:hover {
+main .containerModal .modalAgregarProd .divImagenDelSlider img, main .containerModal .eliminarProducto .divImagenDelSlider img, main .containerModal .agregarImgSlider .divImagenDelSlider img, main .containerModal .eliminarSlider .divImagenDelSlider img {
+  width: 100px;
+}
+
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover, main .containerModal .modalAgregarProd .divEliminarProducto button:hover, main .containerModal .eliminarProducto .divAgregarProductoBtn button:hover, main .containerModal .eliminarProducto .divEliminarProducto button:hover, main .containerModal .agregarImgSlider .divAgregarProductoBtn button:hover, main .containerModal .agregarImgSlider .divEliminarProducto button:hover, main .containerModal .eliminarSlider .divAgregarProductoBtn button:hover, main .containerModal .eliminarSlider .divEliminarProducto button:hover {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   -webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.75) inset;
@@ -364,7 +368,7 @@ main .containerModal .modalAgregarProd .divAgregarProductoBtn button:hover, main
   transition: transform 0.5s,box-shadow 0.5s,-webkit-transform 0.5s,-webkit-box-shadow 0.5s;
 }
 
-main .containerModal .modalAgregarProd .divAgregarProductoBtn button:not(:hover), main .containerModal .modalAgregarProd .divEliminarProducto button:not(:hover), main .containerModal .eliminarProducto .divAgregarProductoBtn button:not(:hover), main .containerModal .eliminarProducto .divEliminarProducto button:not(:hover) {
+main .containerModal .modalAgregarProd .divAgregarProductoBtn button:not(:hover), main .containerModal .modalAgregarProd .divEliminarProducto button:not(:hover), main .containerModal .eliminarProducto .divAgregarProductoBtn button:not(:hover), main .containerModal .eliminarProducto .divEliminarProducto button:not(:hover), main .containerModal .agregarImgSlider .divAgregarProductoBtn button:not(:hover), main .containerModal .agregarImgSlider .divEliminarProducto button:not(:hover), main .containerModal .eliminarSlider .divAgregarProductoBtn button:not(:hover), main .containerModal .eliminarSlider .divEliminarProducto button:not(:hover) {
   -webkit-transform: scale(1);
           transform: scale(1);
   -webkit-box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.75) inset;

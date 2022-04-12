@@ -1,12 +1,15 @@
-let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj")) || [], suma = 0, conSlider = document.getElementById("containerSlider"), imgSlider = [],
-    btnEliminar, contImg = 0, arrProductos = JSON.parse(localStorage.getItem("productosHTML")) || [], btnProd = document.querySelectorAll('.ProductoDiv button');
+let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj")) || [], suma = 0, conSlider = document.getElementById("containerSlider"), imgSlider = [], sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal")) || [],
+    btnEliminar, contImg = 0, arrProductos = JSON.parse(localStorage.getItem("productosHTML")) || [], btnProd = document.querySelectorAll('.ProductoDiv button'),
+    interval = setInterval(() => {
+        sliderFunction()
+    }, 1000000);
 const
     divProductos = document.getElementById('divListAgregado'),
     preciosViajes = JSON.parse(localStorage.getItem("preciosViajes")) || {},
     btnSlider = document.querySelectorAll('.buttonSlider')
 //Buttons Slider
 for (const button of btnSlider) {
-    button.addEventListener("click", () => slider(button))
+    button.addEventListener("click", () => sliderFunction(button))
 }
 //Btn AddProd
 let addProduBtn = document.getElementById("btnAddProd")
@@ -29,22 +32,104 @@ openProd.addEventListener("click", openModal => {
     if (style.display == "block" && modal[0].style.display == "block") {
         modal[0].style.display = "none"
         modal[0].style.opacity = "0"
-        openProd.innerHTML = "Agregar Productos"
-        for (const button of btn) {
-            if (button[button] == undefined) {
-
-            } else { button.addEventListener("click", () => verificarCarrito(button.parentNode.children[1].children[0])) }
-        }
+        openProd.innerHTML = "Agregar/Eliminar Productos"
+        document.getElementById("divImagenDelSlider").innerHTML = ""
     } else {
         modal[0].style.display = "block"
         modal[0].style.opacity = "1"
         openProd.innerHTML = "Cerrar"
+        addRemoveSlider();
+        let btnckeck = document.getElementById("btnDelSlider")
+        btnckeck.addEventListener("click", () => removeSlider())
     }
 })
+function removeSlider() {
+    arrDvDel = document.querySelectorAll(".check")
+    for (i = 0; i <= arrDvDel.length - 1; i++) {
+        if (arrDvDel[i].checked) {
+            sliderArrLocal.splice(i, 1)
+            localStorage.setItem("sliderArrLocal", JSON.stringify(sliderArrLocal))
+            document.getElementById("slider").innerHTML = ""
+            createSlider()
+        }
+    }
+    document.getElementById("divImagenDelSlider").innerHTML = ""
+    addRemoveSlider()
+    let btnckeck = document.getElementById("btnDelSlider")
+    btnckeck.addEventListener("click", () => removeSlider())
+}
 //btn Ir viaje
 for (const key of btnProd) {
     key.addEventListener("click", () => verificarCarrito(key.parentNode.children[1].children[0]))
 }
+//btn Slider ADD
+let btnAddSliderImg = document.getElementById("btnImagenSlider")
+btnAddSliderImg.addEventListener("click", () => {
+    let locaSaveImg = JSON.parse(localStorage.getItem("sliderArrLocal")) || []
+    sliderDv = document.getElementById("slider")
+    let imgSlider = document.getElementById("inpImgSlider").value
+    path = imgSlider.split("C:\\fakepath\\")
+    imgSlider = "../img/" + path[1]
+    dvSlider = document.createElement("div")
+    imgSliderCreate = document.createElement("img")
+    imgSliderCreate.className = "img"
+    imgSliderCreate.src = imgSlider
+    dvSlider.appendChild(imgSliderCreate)
+    dvSlider.className = "sliderImg inactive"
+    sliderDv.appendChild(dvSlider)
+    locaSaveImg.push(imgSlider)
+    localStorage.setItem("sliderArrLocal", JSON.stringify(locaSaveImg))
+    sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal"))
+    document.getElementById("inpImgSlider").value = ""
+    clearInterval(interval)
+    interval = setInterval(() => {
+        sliderFunction()
+    }, 3000);
+    document.getElementById("divImagenDelSlider").innerHTML = ""
+    addRemoveSlider()
+    let btnckeck = document.getElementById("btnDelSlider")
+    btnckeck.addEventListener("click", () => removeSlider())
+})
+
+//Create HTML Slider
+function createSlider() {
+    slider = document.getElementById("slider")
+    for (x = 0; x < sliderArrLocal.length; x++) {
+        dv = document.createElement("div")
+        if (x == 0) {
+            dv.className = "sliderImg active"
+        } else {
+            dv.className = "sliderImg inactive"
+        }
+        img = document.createElement("img")
+        img.className = "img"
+        img.src = sliderArrLocal[x]
+        dv.appendChild(img)
+        slider.appendChild(dv)
+    }
+}
+//AddModalRemove
+function addRemoveSlider() {
+    let dvModalSlider = document.getElementById("divImagenDelSlider")
+    for (i = 0; i < sliderArrLocal.length; i++) {
+        let inpModalSlider = document.createElement("input"),
+            imgSliderModal = document.createElement("img")
+
+        inpModalSlider.className = "check"
+        inpModalSlider.type = "checkbox"
+
+        imgSliderModal.src = sliderArrLocal[i]
+
+        dvModalSlider.appendChild(inpModalSlider)
+        dvModalSlider.appendChild(imgSliderModal)
+    }if (sliderArrLocal != 0){
+    btnDelSlider = document.createElement("button")
+    btnDelSlider.id = "btnDelSlider"
+    btnDelSlider.innerHTML = "Elimnar Imagen del Slider"
+    document.getElementById("divImagenDelSlider").appendChild(btnDelSlider)
+    }
+}
+createSlider()
 //createHTML
 createHTML()
 //crear Clima
@@ -101,50 +186,43 @@ if (Object.keys(preciosViajes).length > 0) {
 }
 
 function eliminarCarrito(lugar) {
-    let producto = document.getElementById(lugar), total = document.getElementById("TotalDiv")
-    swal({
-        title: "Estas seguro que deseas eliminar " + lugar + "?",
-        icon: "warning",
-        button: true,
-        dangerMode: true
-    }).then((willdelete) => {
-        if (willdelete) {
-            for (i = 0; i <= arrObj.length; i++) {
-                if (lugar == arrObj[i]) {
-                    arrObj.splice(i, 3);
-                    delete preciosViajes[lugar]
-                }
-            } if (arrObj.length == 0) {
-                total.style.animation = "opacitOut 1s"
-                total.style.animationFillMode = "running"
-                producto.style.animation = "opacitOut 1s"
-                producto.style.animationFillMode = "running"
-                localStorage.removeItem("arrObj")
-                localStorage.removeItem("productoTotal")
-                localStorage.removeItem("preciosViajes")
-                setTimeout(() => {
-                    producto.remove()
-                    total.remove()
-                }, 500)
-                delete preciosViajes
-            } else {
-                let suma = 0
-                for (i = 0; i <= arrObj.length; i++) {
-                    if (!isNaN(arrObj[i])) {
-                        suma += arrObj[i]
-                    }
-                }
-                localStorage.setItem("arrObj", JSON.stringify(arrObj))
-                localStorage.setItem("productoTotal", JSON.stringify(suma))
-                localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
-                producto.remove()
-                divProductos.parentNode.children[1].textContent = "Total de viajes: " + localStorage.getItem("productoTotal")
-            } swal(lugar + " Se elimino")
+    let producto = document.getElementById(lugar), total = document.getElementById("TotalDiv");
+    for (i = 0; i < arrObj.length; i++) {
+        if (lugar == arrObj[i]) {
+            arrObj.splice(i, 3);
+            delete preciosViajes[lugar]
         }
-    })
+    } if (total != undefined) {
+        if(arrObj.length == 0){
+        total.style.animation = "opacitOut 1s"
+        total.style.animationFillMode = "running"
+        producto.style.animation = "opacitOut 1s"
+        producto.style.animationFillMode = "running"
+        localStorage.removeItem("arrObj")
+        localStorage.removeItem("productoTotal")
+        localStorage.removeItem("preciosViajes")
+        setTimeout(() => {
+            producto.remove()
+            total.remove()
+        }, 500)
+        delete preciosViajes
+    } else {
+        let suma = 0;
+        for (i = 0; i <= arrObj.length; i++) {
+            if (!isNaN(arrObj[i])) {
+                suma += arrObj[i]
+            }
+        }
+        localStorage.setItem("arrObj", JSON.stringify(arrObj))
+        localStorage.setItem("productoTotal", JSON.stringify(suma))
+        localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
+        producto.remove()
+        divProductos.parentNode.children[1].textContent = "Total de viajes: " + localStorage.getItem("productoTotal")
+        }
+    }else {
 
+    }
 }
-
 function verificarCarrito(travel) {
     let lugar = travel.text, precio = travel.parentNode.children[1].text, cantProducto = parseInt(travel.parentNode.parentNode.children[2].value),
         size = Object.keys(preciosViajes)
@@ -236,7 +314,19 @@ function createNewProducto(index, travel, lugar) {
             button.id = "btnEliminar" + index
             button.className = "buttonEliminar"
             ulProducto.children[index].children[3].appendChild(button)
-            button.addEventListener("click", () => eliminarCarrito(lugar))
+            button.addEventListener("click", () => {
+                swal({
+                    title: "Estas seguro que deseas eliminar " + lugar + "?",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                }).then((willdelete) => {
+                    if (willdelete) {
+                        eliminarCarrito(lugar)
+                    }
+                })
+            }
+            )
         }
     }
     if (index == 0) {
@@ -318,32 +408,32 @@ function clima() {
 //Btn Eliminar
 document.getElementById("btnDelProd").addEventListener("click", () => {
     let vEliminar = document.getElementById("txtDelProd").value
-    for (i = 0; i <= arrProductos.length; i++) {
-        if (vEliminar == arrProductos[i]) {
-            //Elimnar HTML
-            arrProductos.splice(i, 3)
-            localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
-            document.getElementById("test2").innerHTML = ""
-            document.getElementById("clima").innerHTML = ""
-            createHTML()
-            clima()
-            //Eliminar del array
-            eliminarCarrito(arrProductos[i])
+    swal({
+        title: "Estas seguro que deseas eliminar " + vEliminar + "?",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+    }).then((willdelete) => {
+        if (willdelete) {
+            for (i = 0; i <= arrProductos.length; i++) {
+                if (vEliminar == arrProductos[i]) {
+                    //Elimnar HTML
+                    arrProductos.splice(i, 3)
+                    localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
+                    document.getElementById("test2").innerHTML = ""
+                    document.getElementById("clima").innerHTML = ""
+                    createHTML()
+                    clima()
+                    //Eliminar del array
+                }
+            }
+
         }
-    }
-
-
-
-
+    })
 })
-
-
-let interval = setInterval(() => {
-    slider()
-}, 3000);
-function slider(button){
+function sliderFunction(button) {
     const sliderObj = document.querySelectorAll('.sliderImg')
-    if(button == undefined || button.className == "buttonSlider"){
+    if (button == undefined || button.className == "buttonSlider") {
         sliderObj[contImg].animate([
             { transform: 'translateX(0px)' },
             { transform: 'translateX(-1500px)' },
@@ -363,7 +453,9 @@ function slider(button){
                 ], {
                     duration: 1000
                 })
-                sliderObj[sliderObj.length - 1].className = "sliderImg inactive"
+                if (sliderObj.length > 1) {
+                    sliderObj[sliderObj.length - 1].className = "sliderImg inactive"
+                }
             } else {
                 sliderObj[contImg].className = "sliderImg inactive"
                 sliderObj[contImg + 1].className = "sliderImg active"
@@ -378,7 +470,7 @@ function slider(button){
                 contImg++
             }
         }, 500);
-    }else{
+    } else {
         sliderObj[contImg].animate([
             { transform: 'translateX(0px)' },
             { transform: 'translateX(1500px)' },
@@ -406,7 +498,7 @@ function slider(button){
                     { transform: 'translateX(-1500px)' },
                     { transform: 'translateX(0px)' },
                     { transition: 'all 1s' }
-                    
+
                 ], {
                     duration: 1000
                 })
@@ -414,10 +506,12 @@ function slider(button){
             }
         }, 500);
     }
-    if ( button.className == "buttonSlider" ||  button.className == "buttonSlider left"){
-        clearInterval(interval)
-        interval = setInterval(() => {
-            slider()
-        }, 3000);
+    if (button != undefined) {
+        if (button.className == "buttonSlider" || button.className == "buttonSlider left") {
+            clearInterval(interval)
+            interval = setInterval(() => {
+                sliderFunction()
+            }, 3000);
+        }
     }
 }
