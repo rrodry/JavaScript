@@ -338,6 +338,10 @@ main .containerModal .modalAgregarProd .divAgregarProducto, main .containerModal
           animation: opacit 1s ease-in-out;
 }
 
+main .containerModal .modalAgregarProd .divEliminarProducto img, main .containerModal .eliminarProducto .divEliminarProducto img, main .containerModal .agregarImgSlider .divEliminarProducto img, main .containerModal .eliminarSlider .divEliminarProducto img {
+  max-width: 100px;
+}
+
 main .containerModal .modalAgregarProd .divAgregarProductoBtn button, main .containerModal .modalAgregarProd .divEliminarProducto button, main .containerModal .modalAgregarProd .divImagenSlider button, main .containerModal .modalAgregarProd .divImagenDelSlider button, main .containerModal .eliminarProducto .divAgregarProductoBtn button, main .containerModal .eliminarProducto .divEliminarProducto button, main .containerModal .eliminarProducto .divImagenSlider button, main .containerModal .eliminarProducto .divImagenDelSlider button, main .containerModal .agregarImgSlider .divAgregarProductoBtn button, main .containerModal .agregarImgSlider .divEliminarProducto button, main .containerModal .agregarImgSlider .divImagenSlider button, main .containerModal .agregarImgSlider .divImagenDelSlider button, main .containerModal .eliminarSlider .divAgregarProductoBtn button, main .containerModal .eliminarSlider .divEliminarProducto button, main .containerModal .eliminarSlider .divImagenSlider button, main .containerModal .eliminarSlider .divImagenDelSlider button {
   background: none;
   border: none;

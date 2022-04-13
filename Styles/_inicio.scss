@@ -208,6 +208,11 @@ main{
                 align-content: flex-end;
                 animation: opacit 1s ease-in-out;
             }
+            .divEliminarProducto{
+                img {
+                   max-width: 100px;
+                }
+            }
             .divAgregarProductoBtn button,.divEliminarProducto button,.divImagenSlider button,.divImagenDelSlider button{
                 background: none;
                 border: none;

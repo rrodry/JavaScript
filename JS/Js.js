@@ -34,15 +34,68 @@ openProd.addEventListener("click", openModal => {
         modal[0].style.opacity = "0"
         openProd.innerHTML = "Agregar/Eliminar Productos"
         document.getElementById("divImagenDelSlider").innerHTML = ""
+        document.getElementById("eliminarProducto").innerHTML = ""
+
     } else {
         modal[0].style.display = "block"
         modal[0].style.opacity = "1"
         openProd.innerHTML = "Cerrar"
+        addRemoveProductHtml();
         addRemoveSlider();
         let btnckeck = document.getElementById("btnDelSlider")
         btnckeck.addEventListener("click", () => removeSlider())
     }
 })
+function addRemoveProductHtml() {
+    let btn = document.createElement("button")
+    dv = document.getElementsByClassName("eliminarProducto")
+    dvEliminar = document.createElement("div")
+    productos = document.querySelectorAll(".ProductoDiv")
+    btn.id = "btnDelProd"
+    btn.innerHTML = "Eliminar Producto"
+    dvEliminar.className = "divEliminarProducto"
+    dv[0].appendChild(dvEliminar)
+    for (i = 0; i < productos.length; i++) {
+        let input = document.createElement("input"),
+            img = document.createElement("img"),
+            imgHtml = document.querySelectorAll("#test")
+        input.className = "inptAgregar"
+        input.id = "chckDelProd"
+        input.type = "checkbox"
+        img.src = imgHtml[i].children[0].src
+        dv[0].children[0].appendChild(input)
+        dv[0].children[0].appendChild(img)
+    }
+    if(productos.length!=0){
+        dv[0].children[0].appendChild(btn)
+        document.getElementById("btnDelProd").addEventListener("click", () => {
+            let checkProd = document.querySelectorAll("#chckDelProd"), x = 0, ind = 0
+            while (x < checkProd.length) {
+                if (checkProd[x].checked) {
+                    swal({
+                        title: "Se elimino " + arrProductos[ind]
+                    })
+                    document.getElementById("test2").innerHTML = ""
+                    document.getElementById("clima").innerHTML = ""
+                    //Elimnar HTML
+                    eliminarCarrito(arrProductos[ind])
+                    arrProductos.splice(ind, 3)
+                    localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
+                    //Eliminar del array
+                    createHTML()
+                    clima()
+                    x++
+                    ind + 3
+                } else {
+                    x++
+                    ind += 3
+                }
+            }
+            document.querySelector(".divEliminarProducto").innerHTML = ""
+            addRemoveProductHtml()
+        })
+    }
+}
 function removeSlider() {
     arrDvDel = document.querySelectorAll(".check")
     for (i = 0; i <= arrDvDel.length - 1; i++) {
@@ -122,11 +175,11 @@ function addRemoveSlider() {
 
         dvModalSlider.appendChild(inpModalSlider)
         dvModalSlider.appendChild(imgSliderModal)
-    }if (sliderArrLocal != 0){
-    btnDelSlider = document.createElement("button")
-    btnDelSlider.id = "btnDelSlider"
-    btnDelSlider.innerHTML = "Elimnar Imagen del Slider"
-    document.getElementById("divImagenDelSlider").appendChild(btnDelSlider)
+    } if (sliderArrLocal != 0) {
+        btnDelSlider = document.createElement("button")
+        btnDelSlider.id = "btnDelSlider"
+        btnDelSlider.innerHTML = "Elimnar Imagen del Slider"
+        document.getElementById("divImagenDelSlider").appendChild(btnDelSlider)
     }
 }
 createSlider()
@@ -193,34 +246,32 @@ function eliminarCarrito(lugar) {
             delete preciosViajes[lugar]
         }
     } if (total != undefined) {
-        if(arrObj.length == 0){
-        total.style.animation = "opacitOut 1s"
-        total.style.animationFillMode = "running"
-        producto.style.animation = "opacitOut 1s"
-        producto.style.animationFillMode = "running"
-        localStorage.removeItem("arrObj")
-        localStorage.removeItem("productoTotal")
-        localStorage.removeItem("preciosViajes")
-        setTimeout(() => {
-            producto.remove()
-            total.remove()
-        }, 500)
-        delete preciosViajes
-    } else {
-        let suma = 0;
-        for (i = 0; i <= arrObj.length; i++) {
-            if (!isNaN(arrObj[i])) {
-                suma += arrObj[i]
+        if (arrObj.length == 0) {
+            total.style.animation = "opacitOut 1s"
+            total.style.animationFillMode = "running"
+            producto.style.animation = "opacitOut 1s"
+            producto.style.animationFillMode = "running"
+            localStorage.removeItem("arrObj")
+            localStorage.removeItem("productoTotal")
+            localStorage.removeItem("preciosViajes")
+            setTimeout(() => {
+                producto.remove()
+                total.remove()
+            }, 500)
+            delete preciosViajes
+        } else {
+            let suma = 0;
+            for (i = 0; i <= arrObj.length; i++) {
+                if (!isNaN(arrObj[i])) {
+                    suma += arrObj[i]
+                }
             }
+            localStorage.setItem("arrObj", JSON.stringify(arrObj))
+            localStorage.setItem("productoTotal", JSON.stringify(suma))
+            localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
+            producto.remove()
+            divProductos.parentNode.children[1].textContent = "Total de viajes: " + localStorage.getItem("productoTotal")
         }
-        localStorage.setItem("arrObj", JSON.stringify(arrObj))
-        localStorage.setItem("productoTotal", JSON.stringify(suma))
-        localStorage.setItem("preciosViajes", JSON.stringify(preciosViajes))
-        producto.remove()
-        divProductos.parentNode.children[1].textContent = "Total de viajes: " + localStorage.getItem("productoTotal")
-        }
-    }else {
-
     }
 }
 function verificarCarrito(travel) {
@@ -405,32 +456,6 @@ function clima() {
     }
 }
 
-//Btn Eliminar
-document.getElementById("btnDelProd").addEventListener("click", () => {
-    let vEliminar = document.getElementById("txtDelProd").value
-    swal({
-        title: "Estas seguro que deseas eliminar " + vEliminar + "?",
-        icon: "warning",
-        button: true,
-        dangerMode: true
-    }).then((willdelete) => {
-        if (willdelete) {
-            for (i = 0; i <= arrProductos.length; i++) {
-                if (vEliminar == arrProductos[i]) {
-                    //Elimnar HTML
-                    arrProductos.splice(i, 3)
-                    localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
-                    document.getElementById("test2").innerHTML = ""
-                    document.getElementById("clima").innerHTML = ""
-                    createHTML()
-                    clima()
-                    //Eliminar del array
-                }
-            }
-
-        }
-    })
-})
 function sliderFunction(button) {
     const sliderObj = document.querySelectorAll('.sliderImg')
     if (button == undefined || button.className == "buttonSlider") {
@@ -515,3 +540,4 @@ function sliderFunction(button) {
         }
     }
 }
+
