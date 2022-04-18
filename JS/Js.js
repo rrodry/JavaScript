@@ -2,7 +2,7 @@ let size, productoTotal = 0, arrObj = JSON.parse(localStorage.getItem("arrObj"))
     btnEliminar, contImg = 0, arrProductos = JSON.parse(localStorage.getItem("productosHTML")) || [], btnProd = document.querySelectorAll('.ProductoDiv button'),
     interval = setInterval(() => {
         sliderFunction()
-    }, 1000000);
+    }, 3000);
 const
     divProductos = document.getElementById('divListAgregado'),
     preciosViajes = JSON.parse(localStorage.getItem("preciosViajes")) || {},
@@ -70,7 +70,7 @@ openProd.addEventListener("click", openModal => {
         openProd.innerHTML = "Agregar/Eliminar Productos"
         document.getElementById("divImagenDelSlider").innerHTML = ""
         document.getElementById("eliminarProducto").innerHTML = ""
-
+        window.location.reload()
     } else {
         modal[0].style.display = "block"
         modal[0].style.opacity = "1"
@@ -261,8 +261,6 @@ function addRemoveSlider() {
         document.getElementById("divImagenDelSlider").appendChild(btnDelSlider)
     }
 }
-
-
 
 createSlider()
 //createHTML
