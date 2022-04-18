@@ -15,19 +15,54 @@ for (const button of btnSlider) {
 let addProduBtn = document.getElementById("btnAddProd")
 addProduBtn.addEventListener("click", () => {
     const productoAAgregado = document.querySelectorAll('.divAgregarProducto')
+    arrProductos = JSON.parse(localStorage.getItem("productosHTML")) || []
+    indexP = 0
+    number = parseInt(productoAAgregado[0].children[1].value)
     for (const value of productoAAgregado) {
-        arrProductos.push(value.children[1].value)
-        value.children[1].value = ""
+        if (value.children[1].value != "") {
+            if (indexP != productoAAgregado.length - 1) {
+                arrProductos.push(value.children[1].value)
+                value.children[1].value = ""
+                indexP++
+            } else {
+                let fileImage = document.querySelector("#inpImagen")
+                const readerP = new FileReader()
+                readerP.addEventListener("load", () => {
+                    if (formatP == "image/png" || formatP == "image/jpg" || formatP == "image/jpeg") {
+                        arrProductos.push(readerP.result)
+                        value.children[1].value = ""
+                        localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
+                        document.getElementById("test2").innerHTML = ""
+                        createHTML()
+                        clima()
+                        addRemoveProductHtml();
+                        indexP++
+                    } else {
+                        swal({
+                            title: "Formato de imagen invalido",
+                            dangerMode: true
+                        })
+                        fileImage.value = ""
+                    }
+                })
+
+                readerP.readAsDataURL(fileImage.files[0])
+                formatP = fileImage.files[0].type
+            }
+        } else {
+            swal({
+                title: "Falta un dato a completar",
+                dangerMode: true
+            })
+        }
     }
-    localStorage.setItem("productosHTML", JSON.stringify(arrProductos))
-    document.getElementById("test2").innerHTML = ""
-    createHTML()
-    clima()
 })
+
 //Button Modal
 let openProd = document.getElementById("liAddProduct")
 openProd.addEventListener("click", openModal => {
     let modal = document.getElementsByClassName("containerModal")
+    sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal"))
     const style = getComputedStyle(modal[0])
     if (style.display == "block" && modal[0].style.display == "block") {
         modal[0].style.display = "none"
@@ -42,10 +77,13 @@ openProd.addEventListener("click", openModal => {
         openProd.innerHTML = "Cerrar"
         addRemoveProductHtml();
         addRemoveSlider();
-        let btnckeck = document.getElementById("btnDelSlider")
-        btnckeck.addEventListener("click", () => removeSlider())
+        if (sliderArrLocal != 0) {
+            let btnckeck = document.getElementById("btnDelSlider")
+            btnckeck.addEventListener("click", () => removeSlider())
+        }
     }
 })
+
 function addRemoveProductHtml() {
     let btn = document.createElement("button")
     dv = document.getElementsByClassName("eliminarProducto")
@@ -66,7 +104,7 @@ function addRemoveProductHtml() {
         dv[0].children[0].appendChild(input)
         dv[0].children[0].appendChild(img)
     }
-    if(productos.length!=0){
+    if (productos.length != 0) {
         dv[0].children[0].appendChild(btn)
         document.getElementById("btnDelProd").addEventListener("click", () => {
             let checkProd = document.querySelectorAll("#chckDelProd"), x = 0, ind = 0
@@ -96,9 +134,10 @@ function addRemoveProductHtml() {
         })
     }
 }
+
 function removeSlider() {
     arrDvDel = document.querySelectorAll(".check")
-    for (i = 0; i <= arrDvDel.length - 1; i++) {
+    for (i = 0; i < arrDvDel.length; i++) {
         if (arrDvDel[i].checked) {
             sliderArrLocal.splice(i, 1)
             localStorage.setItem("sliderArrLocal", JSON.stringify(sliderArrLocal))
@@ -108,41 +147,77 @@ function removeSlider() {
     }
     document.getElementById("divImagenDelSlider").innerHTML = ""
     addRemoveSlider()
-    let btnckeck = document.getElementById("btnDelSlider")
-    btnckeck.addEventListener("click", () => removeSlider())
+    if (sliderArrLocal != 0) {
+        let btnckeck = document.getElementById("btnDelSlider")
+        btnckeck.addEventListener("click", () => removeSlider())
+    } else {
+        clearInterval(interval)
+    }
 }
+
 //btn Ir viaje
 for (const key of btnProd) {
     key.addEventListener("click", () => verificarCarrito(key.parentNode.children[1].children[0]))
 }
+
 //btn Slider ADD
 let btnAddSliderImg = document.getElementById("btnImagenSlider")
 btnAddSliderImg.addEventListener("click", () => {
-    let locaSaveImg = JSON.parse(localStorage.getItem("sliderArrLocal")) || []
-    sliderDv = document.getElementById("slider")
-    let imgSlider = document.getElementById("inpImgSlider").value
-    path = imgSlider.split("C:\\fakepath\\")
-    imgSlider = "../img/" + path[1]
-    dvSlider = document.createElement("div")
-    imgSliderCreate = document.createElement("img")
-    imgSliderCreate.className = "img"
-    imgSliderCreate.src = imgSlider
-    dvSlider.appendChild(imgSliderCreate)
-    dvSlider.className = "sliderImg inactive"
-    sliderDv.appendChild(dvSlider)
-    locaSaveImg.push(imgSlider)
-    localStorage.setItem("sliderArrLocal", JSON.stringify(locaSaveImg))
-    sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal"))
+    saveImgaURL()
+    sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal")) || []
     document.getElementById("inpImgSlider").value = ""
-    clearInterval(interval)
-    interval = setInterval(() => {
-        sliderFunction()
-    }, 3000);
-    document.getElementById("divImagenDelSlider").innerHTML = ""
-    addRemoveSlider()
-    let btnckeck = document.getElementById("btnDelSlider")
-    btnckeck.addEventListener("click", () => removeSlider())
+    if (sliderArrLocal != 0) {
+        let btnckeck = document.getElementById("btnDelSlider")
+        btnckeck.addEventListener("click", () => removeSlider())
+    }
 })
+
+function saveImgaURL() {
+    let input = document.querySelector("#inpImgSlider")
+    const reader = new FileReader()
+
+    reader.addEventListener("load", () => {
+        if (format == "image/png" || format == "image/jpg" || format == "image/jpeg") {
+            let vara = reader.result,
+                sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal")) || []
+            sliderArrLocal.push(vara)
+            localStorage.setItem("sliderArrLocal", JSON.stringify(sliderArrLocal))
+            sliderDv = document.getElementById("slider")
+            dvSlider = document.createElement("div")
+            dvSlider.className = "sliderImg inactive"
+            sliderDv.appendChild(dvSlider)
+            imgSliderCreate = document.createElement("img")
+            imgSliderCreate.className = "img"
+            imgSliderCreate.src = sliderArrLocal[sliderArrLocal.length - 1]
+            sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal")) || []
+            document.getElementById("slider").lastChild.appendChild(imgSliderCreate)
+            document.getElementById("divImagenDelSlider").innerHTML = ""
+            addRemoveSlider()
+            let btnckeck = document.getElementById("btnDelSlider")
+            btnckeck.addEventListener("click", () => removeSlider())
+            interval = setInterval(() => {
+                sliderFunction()
+            }, 3000);
+        } else {
+            swal({
+                title: "Formato Invalido",
+                dangerMode: true
+            })
+        }
+    })
+
+    if (input.files[0]) {
+        reader.readAsDataURL(input.files[0])
+        format = input.files[0].type
+    } else {
+        swal({
+            title: "Imagen no puede estar vacia",
+            dangerMode: true
+        })
+        document.getElementById("divImagenDelSlider").innerHTML = ""
+        addRemoveSlider()
+    }
+}
 
 //Create HTML Slider
 function createSlider() {
@@ -161,27 +236,34 @@ function createSlider() {
         slider.appendChild(dv)
     }
 }
+
 //AddModalRemove
 function addRemoveSlider() {
     let dvModalSlider = document.getElementById("divImagenDelSlider")
+    sliderArrLocal = JSON.parse(localStorage.getItem("sliderArrLocal")) || []
     for (i = 0; i < sliderArrLocal.length; i++) {
-        let inpModalSlider = document.createElement("input"),
-            imgSliderModal = document.createElement("img")
+        if (sliderArrLocal != 0) {
+            let inpModalSlider = document.createElement("input"),
+                imgSliderModal = document.createElement("img")
 
-        inpModalSlider.className = "check"
-        inpModalSlider.type = "checkbox"
+            inpModalSlider.className = "check"
+            inpModalSlider.type = "checkbox"
 
-        imgSliderModal.src = sliderArrLocal[i]
-
-        dvModalSlider.appendChild(inpModalSlider)
-        dvModalSlider.appendChild(imgSliderModal)
-    } if (sliderArrLocal != 0) {
+            imgSliderModal.src = sliderArrLocal[i]
+            dvModalSlider.appendChild(inpModalSlider)
+            dvModalSlider.appendChild(imgSliderModal)
+        }
+    }
+    if (sliderArrLocal != 0) {
         btnDelSlider = document.createElement("button")
         btnDelSlider.id = "btnDelSlider"
         btnDelSlider.innerHTML = "Elimnar Imagen del Slider"
         document.getElementById("divImagenDelSlider").appendChild(btnDelSlider)
     }
 }
+
+
+
 createSlider()
 //createHTML
 createHTML()
@@ -199,8 +281,6 @@ function createHTML() {
         date = document.createElement("input")
         div.className = "ProductoDiv"
         img.src = arrProductos[i + 2]
-        imgPath = img.src.split('file:///C:/fakepath/')
-        img.src = '../img/' + imgPath[1]
         div.appendChild(img)
         p.innerText = "Viaje a "
         a.text = arrProductos[i]

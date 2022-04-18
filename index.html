@@ -46,21 +46,23 @@
         </div>
         <div class="containerModal">
             <div class="modalAgregarProd">
+                <form>
                 <div class="divAgregarProducto">
                     <p>Viaje</p>
-                    <input type="text" id="inpViaje" class="inptAgregar">
+                    <input id="inpViaje" class="inptAgregar" required >
                 </div>
                 <div class="divAgregarProducto">
                     <p>Precio</p>
-                    <input type="text" id="inpPrecio" class="inptAgregar">
+                    <input id="inpPrecio" class="inptAgregar" type="number" required>
                 </div>
                 <div class="divAgregarProducto">
                     <p>Imagen</p>
                     <input type="file" id="inpImagen" class="inptAgregar">
                 </div>
                 <div class="divAgregarProductoBtn">
-                    <button id="btnAddProd">Agregar Producto</button>
+                    <button id="btnAddProd" >Agregar Producto</button>
                 </div>
+            </form>
             </div>
             <div class="eliminarProducto" id = "eliminarProducto">
             <!--<div class="divEliminarProducto">
